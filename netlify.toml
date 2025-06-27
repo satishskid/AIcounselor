@@ -10,6 +10,11 @@
   NODE_OPTIONS = "--openssl-legacy-provider"
   NETLIFY_USE_YARN = "false"
 
+# Disable Next.js plugin
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+  enabled = false
+
 # SPA redirects
 [[redirects]]
   from = "/*"
