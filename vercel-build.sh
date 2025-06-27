@@ -3,9 +3,14 @@
 # Exit on error
 set -e
 
-echo "--- Setting environment to production"
+# Set environment variables
 export NODE_ENV=production
 
+# Print environment info
+echo "--- Node.js version: $(node -v)"
+echo "--- npm version: $(npm -v)"
+
+# Install dependencies
 echo "--- Installing dependencies"
 npm install --legacy-peer-deps
 
@@ -17,7 +22,8 @@ npx prisma generate
 echo "--- Building application"
 npm run build
 
-# Create a simple _redirects file for SPA routing
-echo "/* /index.html 200" > dist/_redirects
+# Run post-build steps
+echo "--- Running post-build steps"
+node scripts/post-build.js
 
 echo "--- Build completed successfully"

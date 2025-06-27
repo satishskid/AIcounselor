@@ -1,61 +1,54 @@
-/// <reference types="vitest" />
-import path from "path";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 import legacy from '@vitejs/plugin-legacy';
-// import { tempo } from "tempo-devtools/dist/vite"; // Disabled for production
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/' : '/',
-  build: {
-    target: 'es2015',
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
+export default defineConfig(({ mode }) => {
+  const isProduction = mode === 'production';
+  
+  return {
+    base: isProduction ? '/' : '/',
+    plugins: [
+      react(),
+      isProduction && legacy({
+        targets: ['defaults', 'not IE 11'],
+        modernPolyfills: true,
+      })
+    ].filter(Boolean),
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
       },
     },
-    modulePreload: {
-      polyfill: true
-    },
-    cssCodeSplit: false,
-    commonjsOptions: {
-      transformMixedEsModules: true,
-    },
-    rollupOptions: {
-      output: {
-        manualChunks: undefined,
-        format: 'esm',
-        exports: 'named',
+    build: {
+      target: 'es2015',
+      minify: isProduction ? 'terser' : false,
+      sourcemap: !isProduction,
+      modulePreload: {
+        polyfill: true,
+      },
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom', 'react-router-dom'],
+            ui: ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
+          },
+        },
       },
     },
-  },
-  optimizeDeps: {
-    entries: ["src/main.tsx", "src/tempobook/**/*"],
-  },
-  plugins: [
-    react(),
-    legacy({
-      targets: ['defaults', 'not IE 11'],
-      modernPolyfills: true
-    }),
-    // tempo(), // Disabled for production
-  ],
-  resolve: {
-    preserveSymlinks: true,
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+    server: {
+      port: 3000,
+      open: true,
     },
-  },
-  server: {
-    // @ts-ignore
-    allowedHosts: true,
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: ['./src/test/setup.ts'],
-  },
+    preview: {
+      port: 3000,
+    },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: ['./src/test/setup.ts'],
+    },
+  };
 });
