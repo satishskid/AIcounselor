@@ -20,14 +20,23 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vite/client", "node"]
+    "types": ["vite/client", "node"],
+    "allowImportingTsExtensions": false
   },
   "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/test/**/*",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx"
+  ],
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
     }
   },
-  "exclude": ["src/test/**/*", "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
