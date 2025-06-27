@@ -10,15 +10,6 @@
   NODE_OPTIONS = "--openssl-legacy-provider"
   NETLIFY_USE_YARN = "false"
 
-# Disable all plugins
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-  enabled = false
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs-dynamic"
-  enabled = false
-
 # SPA redirects
 [[redirects]]
   from = "/*"
