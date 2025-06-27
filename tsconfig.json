@@ -14,11 +14,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-
-    "strict": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "downlevelIteration": true,
+    "moduleDetection": "force"
   },
   "include": ["src"],
   "exclude": ["src/test/**/*", "**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
