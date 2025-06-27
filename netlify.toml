@@ -11,11 +11,11 @@
   NETLIFY_USE_YARN = "false"
 
 # Disable all plugins
-[plugins]
+[[plugins]]
   package = "@netlify/plugin-nextjs"
   enabled = false
 
-[plugins]
+[[plugins]]
   package = "@netlify/plugin-nextjs-dynamic"
   enabled = false
 
