@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm install --legacy-peer-deps && npx prisma generate && tsc --noEmit && vite build",
+    "build": "npm install --legacy-peer-deps && npx prisma generate && tsc --noEmit && NODE_OPTIONS=--openssl-legacy-provider vite build",
     "postbuild": "echo 'Skipping database deployment during build'",
     "health-check": "node scripts/health-check.js",
     "build-no-errors": "tsc ; vite build",
